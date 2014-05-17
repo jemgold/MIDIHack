@@ -118,11 +118,12 @@ if (Meteor.isServer) {
   Meteor.methods({
     changeOrientation: function(orientation) {
       output.sendMessage([176,16,orientation.beta]);
-      // op1.sendMessage([176,4,orientation.beta]);
-      // op1.sendMessage([176,1,orientation.gamma]);
+      output.sendMessage([176,17,orientation.gamma]);
     },
     changePosition: function(position) {
-      // TODO
+      output.sendMessage([176,18,position.x]);
+      output.sendMessage([176,19,position.y]);
+      output.sendMessage([176,20,position.z]);
     },
     setupChannel: function(channel) {
       output.sendMessage([176, channel, 1]);
