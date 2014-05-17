@@ -4,6 +4,7 @@
     "bower": {
       "underscore": "1.5.2"
     },
-    "iron-router": {}
+    "iron-router": {},
+    "session-amplify": {}
   }
 }

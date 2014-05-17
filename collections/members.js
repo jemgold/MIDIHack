@@ -31,8 +31,15 @@ Members.inactive = function() {
 
 
 if (Meteor.isClient) {
-  // TODO: this should be the real user's id
-  Session.set('myID', Members.findOne({})._id);
+  Meteor.startup(function() {
+    if (SessionAmplify.get('myID') === undefined) {
+      r = prompt('name?');
+      var myID = Members.insert({username: r, active: false, instrument: 'gyro'});
+      console.log(myID);
+      SessionAmplify.set('myID', myID);
+    }
+  });
+
   Template.members.members = function() {
     return Members.all({});
   }
@@ -44,14 +51,14 @@ if (Meteor.isClient) {
   });
 
   Template.gyro.currentUserActive = function() {
-    return Members.find({_id: Session.get('myID'), active: true }).count() === 1;
+    return Members.find({_id: SessionAmplify.get('myID'), active: true }).count() === 1;
   }
 }
 
 if (Meteor.isServer) {
   Meteor.setInterval(function() {
     Meteor.call('passTheParcel');
-  }, 1500);
+  }, 2000);
 }
 
 UI.registerHelper('wrapperClass', function(currentUserActive) {
