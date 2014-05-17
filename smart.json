@@ -1,5 +1,8 @@
 {
   "packages": {
-    "npm": {}
+    "npm": {},
+    "bower": {
+      "underscore": "1.5.2"
+    }
   }
 }
