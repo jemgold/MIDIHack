@@ -7,12 +7,12 @@
 <template name="gyro">
 <div class={{wrapperClass currentUserActive}}>
 {{#if currentUserActive}}
-  <h1>x: {{pos.x}}</h1>
-  <h1>y: {{pos.y}}</h1>
-  <h1>z: {{pos.z}}</h1>
-  <h1>alpha: {{pos.alpha}}°</h1>
-  <h1>beta: {{pos.beta}}°</h1>
-  <h1>gamma: {{pos.gamma}}°</h1>
+  <h1>x: {{position.x}}</h1>
+  <h1>y: {{position.y}}</h1>
+  <h1>z: {{position.z}}</h1>
+  <h1>alpha: {{orientation.alpha}}°</h1>
+  <h1>beta: {{orientation.beta}}°</h1>
+  <h1>gamma: {{orientation.gamma}}°</h1>
 {{/if}}
 </div>
 </template>
@@ -29,7 +29,7 @@
 
 <template name="config">
   <h1>Config</h1>
-  
+
   <ul class="channels">
   {{#each channels}}
     <li class="channels__target" data-channel={{this}}>{{this}}</li>
