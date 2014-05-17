@@ -35,7 +35,6 @@ if (Meteor.isClient) {
     if (SessionAmplify.get('myID') === undefined) {
       r = prompt('name?');
       var myID = Members.insert({username: r, active: false, instrument: 'gyro'});
-      console.log(myID);
       SessionAmplify.set('myID', myID);
     }
   });
