@@ -107,12 +107,6 @@ if (Meteor.isServer) {
     // //   console.log(output.getPortName(n));
     // // });
     // op1.openPort(3);
-
-    // setTimeout(function() {
-      // setup methods
-      // output.sendmessage([176,16,127]);
-      // output.sendMessage([176,17,1]);
-    // }, 500);
   });
 
   Meteor.methods({
