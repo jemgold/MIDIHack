@@ -1,5 +1,13 @@
-/* CSS declarations go here */
-body {
-  width: 320px;
-  background: #01ffae;
+@font-face {
+  font-family: "NHG";
+  font-weight: 700;
+  src: url("/nhg.ttf") format('truetype');
 }
+
+body {
+  background: #01ffae;
+  color: #000;
+  font-family: "NHG", "Helvetica Neue", Helvetica;
+  overflow: hidden;
+}
+
