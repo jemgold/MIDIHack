@@ -1,3 +1,15 @@
+State = new Meteor.Collection("state");
+
+function setState(key, value) {
+  State.upsert({key: key}, {key: key, value: value});
+}
+function getState(key) {
+  obj = State.findOne({key: key});
+  if (obj) {
+    return obj['value'];
+  }
+}
+
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
     return "Welcome to MIDIHakk.";
@@ -5,6 +17,10 @@ if (Meteor.isClient) {
 
   Template.gyro.pos = function () {
     return Session.get('o');
+  };
+
+  Template.gyro.example = function() {
+    return getState('example');
   };
 
   Template.hello.events({
@@ -53,6 +69,12 @@ if (Meteor.isServer) {
     output = new midi.output();
     output.openVirtualPort('midihack');
 
+    var i = 0;
+    Meteor.setInterval(function() {
+      setState('example', i);
+      i++;
+    }, 1000);
+
     // op1 = new midi.output();
     // // _.times(op1.getPortCount(), function(n) {
     // //   console.log(n);
@@ -80,4 +102,5 @@ if (Meteor.isServer) {
       // op1.sendMessage([176,1,value]);
     }
   });
+
 }
