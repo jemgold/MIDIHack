@@ -97,16 +97,8 @@ if (Meteor.isServer) {
 
   Meteor.startup(function () {
     midi = Meteor.require('midi');
-
     output = new midi.output();
     output.openVirtualPort('midihack');
-
-    // op1 = new midi.output();
-    // // _.times(op1.getPortCount(), function(n) {
-    // //   console.log(n);
-    // //   console.log(output.getPortName(n));
-    // // });
-    // op1.openPort(3);
   });
 
   Meteor.methods({
@@ -121,6 +113,15 @@ if (Meteor.isServer) {
     },
     setupChannel: function(channel) {
       output.sendMessage([176, channel, 1]);
+    },
+    listPorts: function() {
+      op1 = new midi.output();
+      _.times(op1.getPortCount(), function(n) {
+        console.log(n);
+        console.log(output.getPortName(n));
+      });
+      // then…
+      // op1.openPort(3);
     }
   });
 }
