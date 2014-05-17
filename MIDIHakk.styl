@@ -1,0 +1,67 @@
+@import 'nib';
+
+@font-face {
+  font-family: "NHG";
+  font-weight: 700;
+  src: url("/nhg.ttf") format('truetype');
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-size: 16px;
+  padding: 0;
+}
+
+body {
+  padding: 1em;
+  background: #01ffae;
+  color: #fff;
+  font-family: "NHG", "Helvetica Neue", Helvetica;
+  background-image: -o-linear-gradient(-44deg, #3023AE 0%, #C86DD7 100%);
+  background-image: -moz-linear-gradient(-44deg, #3023AE 0%, #C86DD7 100%);
+  background-image: -ms-linear-gradient(-44deg, #3023AE 0%, #C86DD7 100%);
+  background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);
+}
+
+.channels {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.channels__target {
+  background: rgba(0,0,0,.3);
+  color: #fff;
+  height: 60px;
+  width: 60px;
+  margin-bottom: 10px;
+  line-height: 60px;
+  text-align: center;
+  &.channels__target--pop {
+    animation: flash 0.3s ease-in-out 0s 1 backwards;
+  }
+}
+
+@keyframes flash {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  80% {
+    transform: scale(2);
+    opacity: 0;
+  }
+
+  90% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

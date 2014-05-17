@@ -1,12 +1,8 @@
 <head>
   <title>MIDIHakk</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scaleable=no, minimal-ui;">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimal-ui">
 
 </head>
-
-<body>
-  {{> gyro}}
-</body>
 
 <template name="gyro">
 <h1>x: {{pos.x}}</h1>
@@ -17,6 +13,15 @@
 <h1>gamma: {{pos.gamma}}°</h1>
 </template>
 
+<template name="config">
+  <h1>Config</h1>
+  
+  <ul class="channels">
+  {{#each channels}}
+    <li class="channels__target" data-channel={{this}}>{{this}}</li>
+  {{/each}}
+  </ul>
+</template>
 <template name="hello">
   <h1>Hello World!</h1>
   {{greeting}}

@@ -3,6 +3,7 @@
     "npm": {},
     "bower": {
       "underscore": "1.5.2"
-    }
+    },
+    "iron-router": {}
   }
 }

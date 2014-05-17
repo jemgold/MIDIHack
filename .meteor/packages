@@ -8,3 +8,5 @@ autopublish
 insecure
 npm
 bower
+iron-router
+stylus

@@ -36,7 +36,7 @@ if (Meteor.isClient) {
     Session.set('prevZ', z);
 
     var toSend = Math.floor( Math.min(127, Math.max(0, ((z / -10) * 127))));
-    console.log(toSend);
+    // console.log(toSend);
     Meteor.call('changeZ', toSend);
   };
 
@@ -68,16 +68,19 @@ if (Meteor.isServer) {
   });
 
   Meteor.methods({
-    changeZ: function(value) {
-      output.sendMessage([176,17,value]);
-      // op1.sendMessage([176,1,value]);
-    },
-    changeBeta: function(value) {
-      output.sendMessage([176,16,value]);
-      // op1.sendMessage([176,4,value]);
-    },
-    changeGamma: function(value) {
-      // op1.sendMessage([176,1,value]);
+    // changeZ: function(value) {
+    //   output.sendMessage([176,17,value]);
+    //   // op1.sendMessage([176,1,value]);
+    // },
+    // changeBeta: function(value) {
+    //   output.sendMessage([176,16,value]);
+    //   // op1.sendMessage([176,4,value]);
+    // },
+    // changeGamma: function(value) {
+    //   // op1.sendMessage([176,1,value]);
+    // },
+    setupChannel: function(channel) {
+      output.sendMessage([176, channel, 1]);
     }
   });
 }
