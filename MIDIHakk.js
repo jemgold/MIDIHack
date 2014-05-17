@@ -2,6 +2,8 @@ function MotionProcessor(rate, cutoffFrequency) {
   _.bindAll(this, 'update');
   this.velocity = {x: 0, y: 0, z: 0};
   this.position = {x: 0, y: 0, z: 0};
+
+  this.positionLimit = 0.5;
 }
 
 MotionProcessor.prototype = {
@@ -12,30 +14,24 @@ MotionProcessor.prototype = {
     this.velocity.x = this.velocity.x + acceleration.x * interval;
     this.velocity.y = this.velocity.y + acceleration.y * interval;
     this.velocity.z = this.velocity.z + acceleration.z * interval;
-    this.bound(this.velocity, 0.5);
 
-    // Add drag
-    this.velocity.x = this.drag(this.velocity.x, interval);
-    this.velocity.y = this.drag(this.velocity.y, interval);
-    this.velocity.z = this.drag(this.velocity.z, interval);
+    this.limit(this.velocity, this.positionLimit);
 
-    //console.log(this.velocity.x);
-
-    // Integrate to get position
-    this.position.x = this.position.x + this.velocity.x * interval;
-    this.position.y = this.position.y + this.velocity.y * interval;
-    this.position.z = this.position.z + this.velocity.z * interval;
-    this.bound(this.position, 0.5);
-
-    // console.log(this.position.x);
+    this.position = this.velocity;
   },
 
   drag: function(val, interval) {
     var dir = val > 0 ? -1 : 1
-    return val + 0.25 * dir * interval;
+    var out = val + this.amountOfDrag * dir * interval;
+    if (val > 0) {
+      return Math.max(0, out);
+    }
+    else {
+      return Math.min(0, out);
+    }
   },
 
-  bound: function(obj, val) {
+  limit: function(obj, val) {
     obj.x = Math.max(Math.min(obj.x, val), -val);
     obj.y = Math.max(Math.min(obj.y, val), -val);
     obj.z = Math.max(Math.min(obj.z, val), -val);
@@ -43,9 +39,9 @@ MotionProcessor.prototype = {
 
   positionToMidi: function() {
     return {
-      x: Math.floor((this.position.x + 0.5) * 127),
-      y: Math.floor((this.position.y + 0.5) * 127),
-      z: Math.floor((this.position.z + 0.5) * 127),
+      x: Math.floor((this.position.x + this.positionLimit) * 127),
+      y: Math.floor((this.position.y + this.positionLimit) * 127),
+      z: Math.floor((this.position.z + this.positionLimit) * 127),
     };
   }
 };
