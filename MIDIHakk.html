@@ -18,6 +18,7 @@
 </template>
 
 <template name="members">
+<div class="wrapper">
   <h2>Members:</h2>
   <button class="switcheroo">Switcheroo</button>
   <ul>
@@ -25,9 +26,11 @@
     <li class="member" data-active={{active}}>{{username}}</li>
   {{/each}}
   </ul>
+</div>
 </template>
 
 <template name="config">
+<div class="wrapper">
   <h1>Config</h1>
 
   <ul class="channels">
@@ -35,4 +38,5 @@
     <li class="channels__target" data-channel={{this}}>{{this}}</li>
   {{/each}}
   </ul>
+</div>
 </template>
