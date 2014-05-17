@@ -24,6 +24,7 @@ if (Meteor.isClient) {
   gyro.startTracking(function(o) {
     Session.set('o', decimalify(o));
     Meteor.call('changeBeta', Math.floor((Session.get('o').beta / 90 ) * 127) );
+    Meteor.call('changeGamma', Math.floor(( (Session.get('o').gamma + 45) / 90 ) * 127) );
 
     handleZ();
   });
@@ -39,17 +40,25 @@ if (Meteor.isClient) {
     Meteor.call('changeZ', toSend);
   };
 
-
 }
 
 if (Meteor.isServer) {
   var midi,
-      output;
+      output,
+      op1;
+
   Meteor.startup(function () {
     midi = Meteor.require('midi');
 
     output = new midi.output();
     output.openVirtualPort('midihack');
+
+    // op1 = new midi.output();
+    // // _.times(op1.getPortCount(), function(n) {
+    // //   console.log(n);
+    // //   console.log(output.getPortName(n));
+    // // });
+    // op1.openPort(3);
 
     // setTimeout(function() {
       // setup methods
@@ -61,9 +70,14 @@ if (Meteor.isServer) {
   Meteor.methods({
     changeZ: function(value) {
       output.sendMessage([176,17,value]);
+      // op1.sendMessage([176,1,value]);
     },
     changeBeta: function(value) {
       output.sendMessage([176,16,value]);
+      // op1.sendMessage([176,4,value]);
+    },
+    changeGamma: function(value) {
+      // op1.sendMessage([176,1,value]);
     }
   });
 }
