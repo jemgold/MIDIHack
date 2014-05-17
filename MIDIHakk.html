@@ -35,7 +35,7 @@
 
   <ul class="channels">
   {{#each channels}}
-    <li class="channels__target" data-channel={{this}}>{{this}}</li>
+  <li class="channels__target channels__target--{{description}}" data-channel={{number}}><!-- <h3>{{number}}</h3> --><h4>{{description}}</h4></li>
   {{/each}}
   </ul>
 </div>
