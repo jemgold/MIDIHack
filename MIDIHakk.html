@@ -5,12 +5,26 @@
 </head>
 
 <template name="gyro">
-<h1>x: {{pos.x}}</h1>
-<h1>y: {{pos.y}}</h1>
-<h1>z: {{pos.z}}</h1>
-<h1>alpha: {{pos.alpha}}°</h1>
-<h1>beta: {{pos.beta}}°</h1>
-<h1>gamma: {{pos.gamma}}°</h1>
+<div class={{wrapperClass currentUserActive}}>
+{{#if currentUserActive}}
+  <h1>x: {{pos.x}}</h1>
+  <h1>y: {{pos.y}}</h1>
+  <h1>z: {{pos.z}}</h1>
+  <h1>alpha: {{pos.alpha}}°</h1>
+  <h1>beta: {{pos.beta}}°</h1>
+  <h1>gamma: {{pos.gamma}}°</h1>
+{{/if}}
+</div>
+</template>
+
+<template name="members">
+  <h2>Members:</h2>
+  <button class="switcheroo">Switcheroo</button>
+  <ul>
+  {{#each members}}
+    <li class="member" data-active={{active}}>{{username}}</li>
+  {{/each}}
+  </ul>
 </template>
 
 <template name="config">
@@ -21,9 +35,4 @@
     <li class="channels__target" data-channel={{this}}>{{this}}</li>
   {{/each}}
   </ul>
-</template>
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
 </template>

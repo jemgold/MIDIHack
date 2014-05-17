@@ -5,4 +5,5 @@ Router.configure({
 Router.map(function() {
   this.route('gyro', {path: '/'});
   this.route('config');
+  this.route('members');
 });

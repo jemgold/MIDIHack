@@ -1,18 +1,7 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to MIDIHakk.";
-  };
-
   Template.gyro.pos = function () {
     return Session.get('o');
   };
-
-  Template.hello.events({
-    'click input': function () {
-      var val = Math.floor(Math.random() * 127);
-      Meteor.call('change', val);
-    }
-  });
 
   function decimalify (data) {
     return _.object(_.map(data, function (value, key) {

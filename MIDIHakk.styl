@@ -6,7 +6,7 @@
   src: url("/nhg.ttf") format('truetype');
 }
 
-html, body {
+html {
   height: 100%;
   overflow: hidden;
   font-size: 16px;
@@ -14,14 +14,25 @@ html, body {
 }
 
 body {
+  height: 100%;
+}
+
+.wrapper {
   padding: 1em;
-  background: #01ffae;
-  color: #fff;
   font-family: "NHG", "Helvetica Neue", Helvetica;
-  background-image: -o-linear-gradient(-44deg, #3023AE 0%, #C86DD7 100%);
-  background-image: -moz-linear-gradient(-44deg, #3023AE 0%, #C86DD7 100%);
-  background-image: -ms-linear-gradient(-44deg, #3023AE 0%, #C86DD7 100%);
-  background-image: linear-gradient(-134deg, #3023AE 0%, #C86DD7 100%);
+  height: 100%;
+  background-image: linear-gradient(-134deg, #01B0F0 0%, #7DF4FF 100%);
+  color: #FFED0D;
+
+  &.wrapper--inactive {
+    background-image: linear-gradient(-134deg, #F5515F 0%, #9F041B 100%);
+    color: #fff;
+  }
+
+  &.wrapper--active {
+    background-image: linear-gradient(-134deg, #B4EC51 0%, #429321 100%);
+    color: #fff;
+  }
 }
 
 .channels {
@@ -41,6 +52,12 @@ body {
   text-align: center;
   &.channels__target--pop {
     animation: flash 0.3s ease-in-out 0s 1 backwards;
+  }
+}
+
+.member {
+  &[data-active=true] {
+    color: green;
   }
 }
 
