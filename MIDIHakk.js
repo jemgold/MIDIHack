@@ -120,7 +120,7 @@ if (Meteor.isServer) {
     output.openVirtualPort('midihack');
     input = new midi.input();
     // input.openVirtualPort('midihack shuffle');
-    input.openPort(3);
+    //input.openPort(3);
     input.on('message', Meteor.bindEnvironment(function(deltaTime, message) {
       // Channel 1 note on
       if (message[0] == 144 && message[1] == 66) {

@@ -95,8 +95,17 @@ if (Meteor.isServer) {
   })
 }
 
+function isMobileSafari() {
+  return navigator.userAgent.match(/(iPad|iPhone|iPod touch);.*CPU.*OS 7_\d/i);
+}
+
+
+
 if (Meteor.isClient) {
   Meteor.startup(function() {
+    if (!isMobileSafari()) {
+      return;
+    }
     if (SessionAmplify.get('myID') === undefined) {
       var myID = Members.insert({
         active: false,
