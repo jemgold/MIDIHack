@@ -7,14 +7,14 @@
 <template name="gyro">
 <div class={{wrapperClass currentUserActive}}>
 <!-- {{> flexnav}} -->
-<div class="help-l">
-{{currentUser.instrument}}
-</div>
-<div class="help-r">
-{{currentUser.role}}
-</div>
 
 {{#if currentUserActive}}
+  <div class="help-l">
+  {{currentUser.instrument}}
+  </div>
+  <div class="help-r">
+  {{currentUser.role}}
+  </div>
   <div class="debug">
     <h1>x: {{position.x}}</h1>
     <h1>y: {{position.y}}</h1>
@@ -36,6 +36,7 @@
   <button class="switcheroo">switch</button>
   <button class="kickoff">start</button>
   <button class="pause">pause</button>
+  <button class="kick">kick</button>
   <ul class="member-list">
   {{#each members}}
   <li class="member" data-active={{active}}>{{instrument}}-{{role}}<!-- {{username}} --></li>

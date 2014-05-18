@@ -26,6 +26,9 @@ if (Meteor.isServer) {
     },
     pause: function() {
       Meteor.clearInterval(timerID);
+    },
+    kick: function() {
+      Members.remove({});
     }
   })
 }
@@ -102,6 +105,9 @@ if (Meteor.isClient) {
     },
     'click .pause': function() {
       Meteor.call('pause');
+    },
+    'click .kick': function() {
+      Meteor.call('kick');
     }
   });
 
