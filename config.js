@@ -9,13 +9,14 @@ if (Meteor.isClient) {
   }
 
   Template.config.events({
-    'click, touchstart .channels__target': function(e) {
-      var $target = $(e.currentTarget).parent('li'),
+    'click .channels__target, touchstart .channels__target': function(e) {
+      var $target = $(e.currentTarget),
           channel = $target.attr('data-channel');
       $target.addClass('channels__target--pop');
       setTimeout(function() {
         $target.removeClass('channels__target--pop');
       }, 400);
+      console.log('setting up', channel);
       Meteor.call('setupChannel', channel);
     }
   });
