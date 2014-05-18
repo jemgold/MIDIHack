@@ -1,6 +1,7 @@
 @import 'nib'
 
 neutralBG = #7DF4FF
+neutralBG = #CCC
 activeBG = #61ED7D
 inactiveBG = #ED7361
 // does white text look better? override here
@@ -159,7 +160,32 @@ body {
     background: activeBG
     color: activeFG
   }
+  &.beta {
+    animation: beta 0.8s ease-in-out 0s infinite backwards alternate
+  }
+  &.gamma {
+    animation: gamma 0.8s ease-in-out 0s infinite backwards alternate
+  }
+  &.xShift {
+    animation: xShift 0.8s ease-in-out 0s infinite backwards alternate
+  }
+  &.yShift {
+    animation: yShift 0.8s ease-in-out 0s infinite backwards alternate
+  }
+  &.zShift {
+    perspective: 500
+    transform-style: preserve-3d
+    animation: zShift 0.8s ease-in-out 0s infinite backwards alternate
+  }
 }
+
+.btn
+  border: 5px solid neutralFG
+  font-family: "NHG", "Helvetica Neue"
+  font-size: 16px
+  padding: 10px
+  color: neutralFG
+  margin: 0 1em 2em 0
 
 @keyframes flash {
   0% {

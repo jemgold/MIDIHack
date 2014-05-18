@@ -33,13 +33,13 @@
 <template name="members">
 <div class="wrapper">
   <h2 class="floatinginstruction">människor</h2>
-  <button class="switcheroo">switch</button>
-  <button class="kickoff">start</button>
-  <button class="pause">pause</button>
-  <button class="kick">kick</button>
+  <button class="btn switcheroo">switch</button>
+  <button class="btn kickoff">start</button>
+  <button class="btn pause">pause</button>
+  <button class="btn kick">kick</button>
   <ul class="member-list">
   {{#each members}}
-  <li class="member" data-active={{active}}>{{instrument}}-{{role}}<!-- {{username}} --></li>
+  <li class="member {{role}}" data-active={{active}}>{{instrument}}-{{role}}<!-- {{username}} --></li>
   {{/each}}
   </ul>
 </div>
