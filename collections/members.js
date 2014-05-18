@@ -32,7 +32,7 @@ var ROLES = [
   {instrument: 'rotation', role: 'beta'},
   {instrument: 'rotation', role: 'gamma'},
   {instrument: 'motion', role: 'xShift'},
-  {instrument: 'motion', role: 'yShift'},
+  {instrument: 'motion', role: 'zShift'},
 ];
 
 var numberOfActiveMembers = 2;
