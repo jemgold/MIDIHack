@@ -56,6 +56,17 @@ if (Meteor.isClient) {
     return Session.get('position');
   };
 
+  Template.gyro.currentUser = function() {
+    return Members.currentUser();
+  };
+
+  Template.flexnav.currentRole = function() {
+    var me = Members.currentUser();
+    if (me !== undefined) {
+      return me.instrument;
+    }
+  }
+
   function decimalify (data) {
     return _.object(_.map(data, function (value, key) {
       var v = value === null ? 0 : value.toFixed(0);
@@ -66,6 +77,7 @@ if (Meteor.isClient) {
   processor = new MotionProcessor();
 
   window.addEventListener('devicemotion', function(event) {
+    console.log(Members.currentUserRole());
     processor.update(event.acceleration, event.interval);
     var position = processor.positionToMidi();
     Session.set('position', position);

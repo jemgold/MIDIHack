@@ -1,161 +1,241 @@
-@import 'nib';
+@import 'nib'
+
+neutralBG = #7DF4FF
+activeBG = #61ED7D
+inactiveBG = #ED7361
+// does white text look better? override here
+if whiteText == true
+  neutralFG = #FFF
+  activeFG = #FFF
+  inactiveFG = #FFF
+else
+  neutralFG = #FFED0D
+  activeFG = #C86DD7
+  inactiveFG = #7DF4FF
 
 @font-face {
-  font-family: "NHG";
-  font-weight: 700;
-  src: url("/nhg.ttf") format('truetype');
+  font-family: "NHG"
+  font-weight: 700
+  src: url("/nhg.ttf") format('truetype')
 }
 
 html {
-  height: 100%;
-  overflow: hidden;
-  font-size: 16px;
-  padding: 0;
+  height: 100%
+  overflow: hidden
+  font-size: 16px
+  padding: 0
 }
 
 body {
-  height: 100%;
+  height: 100%
 }
 
 .wrapper {
-  padding: 1em;
-  font-family: "NHG", "Helvetica Neue", Helvetica;
-  height: 100%;
-  background-image: linear-gradient(-134deg, #01B0F0 0%, #7DF4FF 100%);
-  color: #FFED0D;
+  padding: 1em
+  font-family: "NHG", "Helvetica Neue", Helvetica
+  height: 100%
+  background: neutralBG
+  color: neutralFG
 
   &.wrapper--inactive {
-    background-image: linear-gradient(-134deg, #F5515F 0%, #9F041B 100%);
-    color: #fff;
+    background: inactiveBG
+    color: inactiveFG
+    text-align: center
   }
 
   &.wrapper--active {
-    background-image: linear-gradient(-134deg, #B4EC51 0%, #429321 100%);
-    color: #fff;
+    background: activeBG
+    color: activeFG
+    text-align: center
   }
 }
 
+.debug
+  display: none
+
+.help-l
+  position: fixed
+  bottom: 1em
+  left: 1em
+.help-r
+  position: fixed
+  bottom: 1em
+  right: 1em
+
+.floatinginstruction
+  position: fixed;
+  top: 0.5em;
+  padding: 19px;
+  opacity: 4.5;
+  font-size: 28px;
+  height: 28px;
+  line-height: 28px;
+  right: -0.5em;
+  border: 10px solid;
+.instruction
+  font-size: 64px
+  border: 10px solid transparent
+  height: 124px
+  display: inline-block
+  line-height: 124px
+
+  &.instruction--active
+    border: 10px solid activeFG
+    width: 124px
+
+    &.instruction--active--beta {
+      animation: beta 0.8s ease-in-out 0s infinite backwards alternate
+    }
+    &.instruction--active--gamma {
+      animation: gamma 0.8s ease-in-out 0s infinite backwards alternate
+    }
+    &.instruction--active--xShift {
+      animation: xShift 0.8s ease-in-out 0s infinite backwards alternate
+    }
+    &.instruction--active--yShift {
+      animation: yShift 0.8s ease-in-out 0s infinite backwards alternate
+    }
+    &.instruction--active--zShift {
+      perspective: 500
+      transform-style: preserve-3d
+      animation: zShift 0.8s ease-in-out 0s infinite backwards alternate
+    }
+
 .channels {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: space-between;
+  display: flex
+  flex-wrap: wrap
+  flex-direction: row
+  justify-content: space-between
 }
 
 .channels__target {
-  background: rgba(0,0,0,.3);
-  color: #fff;
-  height: 60px;
-  width: 60px;
-  margin-bottom: 10px;
-  line-height: 60px;
-  text-align: center;
+  background: rgba(0,0,0,.3)
+  color: #fff
+  height: 60px
+  width: 60px
+  margin-bottom: 10px
+  line-height: 60px
+  text-align: center
   &.channels__target--pop {
-    animation: flash 0.3s ease-in-out 0s 1 backwards;
+    animation: flash 0.3s ease-in-out 0s 1 backwards
   }
 
   &:hover {
     &.channels__target--beta {
-      animation: beta 0.8s ease-in-out 0s infinite backwards alternate;
+      animation: beta 0.8s ease-in-out 0s infinite backwards alternate
     }
     &.channels__target--gamma {
-      animation: gamma 0.8s ease-in-out 0s infinite backwards alternate;
+      animation: gamma 0.8s ease-in-out 0s infinite backwards alternate
     }
     &.channels__target--xShift {
-      animation: xShift 0.8s ease-in-out 0s infinite backwards alternate;
+      animation: xShift 0.8s ease-in-out 0s infinite backwards alternate
     }
     &.channels__target--yShift {
-      animation: yShift 0.8s ease-in-out 0s infinite backwards alternate;
+      animation: yShift 0.8s ease-in-out 0s infinite backwards alternate
     }
     &.channels__target--zShift {
-      perspective: 500;
-      transform-style: preserve-3d;
-      animation: zShift 0.8s ease-in-out 0s infinite backwards alternate;
+      perspective: 500
+      transform-style: preserve-3d
+      animation: zShift 0.8s ease-in-out 0s infinite backwards alternate
     }
   }
 }
 
+.member-list
+  display: flex
+  flex-wrap: wrap
+  flex-direction: row
+  justify-content: space-between
+
 .member {
+  background: inactiveBG
+  color: inactiveFG
+  height: 120px
+  width: 120px
+  margin-bottom: 10px
+  line-height: 120px
+  text-align: center
   &[data-active=true] {
-    color: green;
+    background: activeBG
+    color: activeFG
   }
 }
 
 @keyframes flash {
   0% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(1)
+    opacity: 1
   }
 
   80% {
-    transform: scale(2);
-    opacity: 0;
+    transform: scale(2)
+    opacity: 0
   }
 
   90% {
-    transform: scale(0);
-    opacity: 0;
+    transform: scale(0)
+    opacity: 0
   }
 
   100% {
-    transform: scale(1);
-    opacity: 1;
+    transform: scale(1)
+    opacity: 1
   }
 }
 
 @keyframes beta {
   0% {
-    transform: rotateX(-40deg);
-    transform-origin: 50% 50%;
-    perspective: 200;
-    perspective-origin: 50% 50%;
+    transform: rotateX(-40deg)
+    transform-origin: 50% 50%
+    perspective: 200
+    perspective-origin: 50% 50%
   }
   100% {
-    transform: rotateX(0deg);
-    transform-origin: 50% 50%;
-    perspective: 200;
-    perspective-origin: 50% 50%;
+    transform: rotateX(0deg)
+    transform-origin: 50% 50%
+    perspective: 200
+    perspective-origin: 50% 50%
   }
 }
 @keyframes gamma {
   0% {
-    transform: rotateX(-40deg) rotateY(-40deg);
-    transform-origin: 50% 50%;
-    perspective: 200;
-    perspective-origin: 50% 50%;
+    transform: rotateX(-40deg) rotateY(-40deg)
+    transform-origin: 50% 50%
+    perspective: 200
+    perspective-origin: 50% 50%
   }
   100% {
-    transform: rotateX(-40deg) rotateY(40deg);
-    transform-origin: 50% 50%;
-    perspective: 200;
-    perspective-origin: 50% 50%;
+    transform: rotateX(-40deg) rotateY(40deg)
+    transform-origin: 50% 50%
+    perspective: 200
+    perspective-origin: 50% 50%
   }
 }
 @keyframes xShift {
   0% {
-    transform: translatex(-10px);
+    transform: translatex(-10px)
   }
   100% {
-    transform: translatex(10px);
+    transform: translatex(10px)
   }
 }
 
 @keyframes yShift {
   0% {
-    transform: translatey(-10px);
+    transform: translatey(-10px)
   }
   100% {
-    transform: translatey(10px);
+    transform: translatey(10px)
   }
 }
 
 @keyframes zShift {
   0% {
-    /*transform: translatez(-10px);*/
-    transform: scale(1);
+    /*transform: translatez(-10px)*/
+    transform: scale(1)
   }
   100% {
-    /*transform: translatez(10px);*/
-    transform: scale(0.7);
+    /*transform: translatez(10px)*/
+    transform: scale(0.7)
   }
 }

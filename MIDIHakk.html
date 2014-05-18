@@ -6,27 +6,50 @@
 
 <template name="gyro">
 <div class={{wrapperClass currentUserActive}}>
+<!-- {{> flexnav}} -->
+<div class="help-l">
+{{currentUser.instrument}}
+</div>
+<div class="help-r">
+{{currentUser.role}}
+</div>
+
 {{#if currentUserActive}}
-  <h1>x: {{position.x}}</h1>
-  <h1>y: {{position.y}}</h1>
-  <h1>z: {{position.z}}</h1>
-  <h1>alpha: {{orientation.alpha}}°</h1>
-  <h1>beta: {{orientation.beta}}°</h1>
-  <h1>gamma: {{orientation.gamma}}°</h1>
+  <div class="debug">
+    <h1>x: {{position.x}}</h1>
+    <h1>y: {{position.y}}</h1>
+    <h1>z: {{position.z}}</h1>
+    <h1>alpha: {{orientation.alpha}}°</h1>
+    <h1>beta: {{orientation.beta}}°</h1>
+    <h1>gamma: {{orientation.gamma}}°</h1>
+  </div>
+  <h1 class="instruction instruction--active instruction--active--{{currentUser.role}}">gå</h1>
+{{else}}
+  <h1 class="instruction">vänta</h1>
 {{/if}}
 </div>
 </template>
 
 <template name="members">
 <div class="wrapper">
-  <h2>Members:</h2>
-  <button class="switcheroo">Switcheroo</button>
-  <ul>
+  <h2 class="floatinginstruction">människor</h2>
+  <button class="switcheroo">switch</button>
+  <button class="kickoff">start</button>
+  <button class="pause">pause</button>
+  <ul class="member-list">
   {{#each members}}
-    <li class="member" data-active={{active}}>{{username}}</li>
+  <li class="member" data-active={{active}}>{{instrument}}-{{role}}<!-- {{username}} --></li>
   {{/each}}
   </ul>
 </div>
+</template>
+
+<template name="flexnav">
+  <ul class="flexnav">
+    {{currentRole}}
+    <!-- <li class="devicemotion {{flexnavclass motion currentRole}}" data&#45;role="motion">Motion</li> -->
+    <!-- <li class="devicerotation {{flexnavclass motion currentRole}}" data&#45;role="rotation">Rotation</li> -->
+  </ul>
 </template>
 
 <template name="config">
