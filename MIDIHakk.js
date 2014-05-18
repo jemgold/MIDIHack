@@ -77,6 +77,9 @@ if (Meteor.isClient) {
   processor = new MotionProcessor();
 
   window.addEventListener('devicemotion', function(event) {
+    if (Members.currentUser().active !== true) {
+      return false;
+    }
     if (Members.currentUserInstrument() === 'motion') {
       processor.update(event.acceleration, event.interval);
       var position = processor.positionToMidi();
@@ -87,6 +90,9 @@ if (Meteor.isClient) {
   });
 
   window.addEventListener("deviceorientation", function(event) {
+    if (Members.currentUser().active !== true) {
+      return false;
+    }
     if (Members.currentUserInstrument() === 'rotation') {
       Session.set('orientation', decimalify({
         alpha: event.alpha,
