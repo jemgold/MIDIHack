@@ -84,7 +84,7 @@ if (Meteor.isServer) {
     kickoff: function() {
       timerID = Meteor.setInterval(function() {
         Meteor.call('passTheParcel');
-      }, 2000);
+      }, 5000);
     },
     pause: function() {
       Meteor.clearInterval(timerID);
@@ -98,9 +98,7 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
   Meteor.startup(function() {
     if (SessionAmplify.get('myID') === undefined) {
-      var username = prompt('name?');
       var myID = Members.insert({
-        username: username,
         active: false,
         instrument: null,
         role: null
