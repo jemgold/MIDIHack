@@ -77,23 +77,28 @@ if (Meteor.isClient) {
   processor = new MotionProcessor();
 
   window.addEventListener('devicemotion', function(event) {
-    console.log(Members.currentUserRole());
-    processor.update(event.acceleration, event.interval);
-    var position = processor.positionToMidi();
-    Session.set('position', position);
-    Meteor.call('changePosition', position);
+    if (Members.currentUserInstrument() === 'motion') {
+      processor.update(event.acceleration, event.interval);
+      var position = processor.positionToMidi();
+      position.role = Members.currentUserRole();
+      Session.set('position', position);
+      Meteor.call('changePosition', position);
+    }
   });
 
   window.addEventListener("deviceorientation", function(event) {
-    Session.set('orientation', decimalify({
-      alpha: event.alpha,
-      beta: event.beta,
-      gamma: event.gamma
-    }));
-    Meteor.call('changeOrientation', {
-      beta: Math.floor((event.beta / 90 ) * 127),
-      gamma: Math.floor(( (event.gamma + 45) / 90 ) * 127)
-    });
+    if (Members.currentUserInstrument() === 'rotation') {
+      Session.set('orientation', decimalify({
+        alpha: event.alpha,
+        beta: event.beta,
+        gamma: event.gamma
+      }));
+      Meteor.call('changeOrientation', {
+        beta: Math.floor((event.beta / 90 ) * 127),
+        gamma: Math.floor(( (event.gamma + 45) / 90 ) * 127),
+        role: Members.currentUserRole()
+      });
+    }
   }, true);
 
 }
@@ -111,13 +116,32 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     changeOrientation: function(orientation) {
-      output.sendMessage([176,16,orientation.beta]);
-      output.sendMessage([176,17,orientation.gamma]);
+      switch (position.role) {
+        case 'beta':
+          output.sendMessage([176,16,orientation.beta]);
+          break;
+        case 'gamma':
+          output.sendMessage([176,17,orientation.gamma]);
+          break;
+        default:
+          break;
+      }
     },
     changePosition: function(position) {
-      output.sendMessage([176,18,position.x]);
-      output.sendMessage([176,19,position.y]);
-      output.sendMessage([176,20,position.z]);
+      console.log(position.role);
+      switch (position.role) {
+        case 'xShift':
+          output.sendMessage([176,18,position.x]);
+          break;
+        case 'yShift':
+          output.sendMessage([176,19,position.y]);
+          break;
+        case 'zShift':
+          output.sendMessage([176,20,position.z]);
+          break;
+        default:
+          break;
+      }
     },
     setupChannel: function(channel) {
       output.sendMessage([176, channel, 1]);

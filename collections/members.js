@@ -66,7 +66,7 @@ if (Meteor.isClient) {
         if (j === 0) {
           role = 'xShift';
         } else {
-          role = 'yShift';
+          role = 'zShift';
         }
       }
       var myID = Members.insert({username: r, active: false, instrument: instrument, role: role});
@@ -79,10 +79,14 @@ if (Meteor.isClient) {
   }
 
   Members.currentUserRole = function() {
-    return Members.currentUser().role;
+    if (Members.currentUser() !== undefined) {
+      return Members.currentUser().role;
+    }
   }
   Members.currentUserInstrument = function() {
-    return Members.currentUser().instrument;
+    if (Members.currentUser() !== undefined) {
+      return Members.currentUser().instrument;
+    }
   }
 
   Template.members.members = function() {
