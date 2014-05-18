@@ -119,10 +119,12 @@ if (Meteor.isServer) {
     output = new midi.output();
     output.openVirtualPort('midihack');
     input = new midi.input();
-    input.openVirtualPort('midihack shuffle');
+    // input.openVirtualPort('midihack shuffle');
+    input.openPort(3);
     input.on('message', Meteor.bindEnvironment(function(deltaTime, message) {
       // Channel 1 note on
-      if (message[0] == 144) {
+      if (message[0] == 144 && message[1] == 66) {
+        // console.log(message);
         Members.passTheParcel();
       }
     }));
@@ -142,7 +144,7 @@ if (Meteor.isServer) {
       }
     },
     changePosition: function(position) {
-      console.log(position.role);
+      // console.log(position.role);
       switch (position.role) {
         case 'xShift':
           output.sendMessage([176,18,position.x]);
