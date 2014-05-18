@@ -1,20 +1,82 @@
+
 Members = new Meteor.Collection('members');
+
+Members.all = function () {
+  return Members.find({}).fetch();
+}
+
+Members.active = function() {
+  return Members.find({active: true});
+}
+
+Members.inactive = function() {
+  return Members.find({active: false});
+}
+
+Members.currentUser = function() {
+  return Members.findOne(SessionAmplify.get('myID'));
+}
+
+Members.currentUserRole = function() {
+  if (Members.currentUser() !== undefined) {
+    return Members.currentUser().role;
+  }
+}
+Members.currentUserInstrument = function() {
+  if (Members.currentUser() !== undefined) {
+    return Members.currentUser().instrument;
+  }
+}
+
+var ROLES = [
+  {instrument: 'rotation', role: 'beta'},
+  {instrument: 'rotation', role: 'gamma'},
+  {instrument: 'motion', role: 'xShift'},
+  {instrument: 'motion', role: 'yShift'},
+];
+
+var numberOfActiveMembers = 2;
+
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/array/shuffle [v1.0]
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
+Members.passTheParcel = function() {
+  // Shuffle roles
+  shuffle(ROLES);
+
+  // Fetch current state
+  var currentMembers = Members.active().fetch();
+  var inactiveMembers = Members.inactive().fetch();
+  var newMembers = shuffle(inactiveMembers).slice(0, numberOfActiveMembers);
+
+  // Disable current members
+  _.each(currentMembers, function(member) {
+    Members.update(member, {$set: {
+      active: false,
+      instrument: null,
+      role: null,
+  }});
+  })
+
+  // Enable new members
+  _.each(newMembers, function(member, i) {
+    Members.update(member, {$set: {
+      active: true,
+      instrument: ROLES[i]['instrument'],
+      role: ROLES[i]['role'],
+    }});
+  });
+}
+
 var timerID;
 
 Meteor.methods({
   passTheParcel: function() {
-    var currentMembers = Members.active();
-
-    var inactiveMembers = Members.inactive();
-
-    Members.all().forEach(function(cm) {
-      Members.update(cm, {$set: {active: !cm.active} } );
-    });
-
-    // TODO: this should pick 3 people to be next
-    // currentMembers.forEach(function(cm) {
-    //   Members.update(cm, {$set: {active: false} } );
-    // });
+    Members.passTheParcel();
   }
 });
 if (Meteor.isServer) {
@@ -33,64 +95,19 @@ if (Meteor.isServer) {
   })
 }
 
-Members.all = function () {
-  return Members.find({}).fetch();
-}
-
-Members.active = function() {
-  return Members.find({active: true});
-}
-
-Members.inactive = function() {
-  return Members.find({active: false});
-}
-
-
 if (Meteor.isClient) {
   Meteor.startup(function() {
     if (SessionAmplify.get('myID') === undefined) {
-      r = prompt('name?');
-      var i = Math.round(Math.random());
-      var j = Math.round(Math.random());
-
-      var instrument, role;
-
-      if (i === 0) {
-        // motion
-        instrument = 'rotation';
-        if (j === 0) {
-          role = 'beta';
-        } else {
-          role = 'gamma';
-        }
-      } else {
-        // rotation
-        instrument = 'motion';
-        if (j === 0) {
-          role = 'xShift';
-        } else {
-          role = 'zShift';
-        }
-      }
-      var myID = Members.insert({username: r, active: false, instrument: instrument, role: role});
+      var username = prompt('name?');
+      var myID = Members.insert({
+        username: username,
+        active: false,
+        instrument: null,
+        role: null
+      });
       SessionAmplify.set('myID', myID);
     }
   });
-
-  Members.currentUser = function() {
-    return Members.findOne(SessionAmplify.get('myID'));
-  }
-
-  Members.currentUserRole = function() {
-    if (Members.currentUser() !== undefined) {
-      return Members.currentUser().role;
-    }
-  }
-  Members.currentUserInstrument = function() {
-    if (Members.currentUser() !== undefined) {
-      return Members.currentUser().instrument;
-    }
-  }
 
   Template.members.members = function() {
     return Members.all({});
@@ -115,5 +132,3 @@ if (Meteor.isClient) {
     return Members.find({_id: SessionAmplify.get('myID'), active: true }).count() === 1;
   }
 }
-
-

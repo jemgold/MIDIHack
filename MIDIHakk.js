@@ -77,7 +77,7 @@ if (Meteor.isClient) {
   processor = new MotionProcessor();
 
   window.addEventListener('devicemotion', function(event) {
-    if (Members.currentUser().active !== true) {
+    if (!Members.currentUser() || Members.currentUser().active !== true) {
       return false;
     }
     if (Members.currentUserInstrument() === 'motion') {
@@ -90,7 +90,7 @@ if (Meteor.isClient) {
   });
 
   window.addEventListener("deviceorientation", function(event) {
-    if (Members.currentUser().active !== true) {
+    if (!Members.currentUser() || Members.currentUser().active !== true) {
       return false;
     }
     if (Members.currentUserInstrument() === 'rotation') {
