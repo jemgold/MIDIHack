@@ -118,6 +118,14 @@ if (Meteor.isServer) {
     midi = Meteor.require('midi');
     output = new midi.output();
     output.openVirtualPort('midihack');
+    input = new midi.input();
+    input.openVirtualPort('midihack shuffle');
+    input.on('message', Meteor.bindEnvironment(function(deltaTime, message) {
+      // Channel 1 note on
+      if (message[0] == 144) {
+        Members.passTheParcel();
+      }
+    }));
   });
 
   Meteor.methods({
