@@ -116,7 +116,7 @@ if (Meteor.isServer) {
 
   Meteor.methods({
     changeOrientation: function(orientation) {
-      switch (position.role) {
+      switch (orientation.role) {
         case 'beta':
           output.sendMessage([176,16,orientation.beta]);
           break;
