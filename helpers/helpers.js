@@ -5,16 +5,16 @@ UI.registerHelper('wrapperClass', function(currentUserActive) {
 UI.registerHelper('niceDesc', function(role) {
   switch (role) {
     case "beta":
-      return "bass BP filter"
+      return "Bass BP"
       break;
     case "gamma":
-      return "bass LFO"
+      return "Bass LFO"
       break;
     case "xShift":
-      return "master pan"
+      return "Pan"
       break;
     case "zShift":
-      return "breakbeat LP filter"
+      return "Drum LP"
       break;
     default:
       return "×"
